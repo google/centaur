@@ -1,0 +1,281 @@
+<form class="container-form">
+  <mat-tab-group class="main-tabs" mat-align-tabs="center">
+    <mat-tab *ngIf="allowSerializationEdit">
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-icon">settings</mat-icon>
+        Build
+      </ng-template>
+      <div class="marker-editor">
+        <!--- DATA TABLE -->
+        <div class="data-container">
+          <div class="top-bar data-bar">
+            Few Shot Data
+          </div>
+          <div class="io-pairs-header">
+              <div class="io-pair-inputs header-marg">
+                Inputs
+              </div>
+              <div class="io-pair-outputs header-marg">
+                Outputs
+              </div>
+              <div class="io-pair-actions"></div>
+            </div>
+
+          <div class="io-pairs">
+
+            <div class="io-pairs-list-container">
+              <div class="io-pairs-list">
+                <div
+                  *ngFor="let pair of program.pairs; let idx = index; trackBy: trackByFn"
+                  [class]="'io-pair io-pair-color'+(idx % 2)"
+                >
+                  <div class="io-pair-inputs">
+                    <ul class="input-list">
+                      <li *ngFor="let input of pair['inputs']; let jdx = index; trackBy: trackByFn">
+                        <textarea
+                          class="pair-input"
+                          matInput
+                          autocomplete="off"
+                          name="{{ 'einput' + idx + '-' + jdx }}"
+                          placeholder="write an input"
+                          (input)="refreshText($event)"
+                          [(ngModel)]="pair['inputs'][jdx]"
+                        ></textarea>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="io-pair-outputs">
+                    <ul class="output-list">
+                      <li
+                        *ngFor="let input of pair['outputs']; let jdx = index; trackBy: trackByFn"
+                      >
+                        <textarea
+                          class="pair-input"
+                          matInput
+                          autocomplete="off"
+                          name="{{ 'eoutput' + idx + '-' + jdx }}"
+                          placeholder="write an output"
+                          (input)="refreshText($event)"
+                          [(ngModel)]="pair['outputs'][jdx]"
+                        ></textarea>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="io-pair-actions">
+                    <button mat-mini-fab (click)="deleteIO(idx)" class="mini-butt">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--- END IO PAIRS TABLE --->
+            
+          </div>
+
+          <div class="button-row">
+            <div class="data-bottom-control">
+              <button mat-raised-button class="butt" (click)="addIO()">
+                <mat-icon>add</mat-icon>
+                New Example
+              </button>
+            </div>
+            <div class="data-bottom-control">
+              <button
+                [disabled]="isGenerating"
+                mat-raised-button
+                class="butt"
+                (click)="generateNewPair()"
+              >
+                <mat-icon>construction</mat-icon>
+                Auto-Generate
+              </button>
+            </div>
+            <div class="a-slider data-bottom-control">
+              <h5 class="slider-header">
+                How many inputs?
+              </h5>
+              <mat-slider
+                class="input-count"
+                [max]="5"
+                [min]="1"
+                [step]="1"
+                [tickInterval]="1"
+                [displayWith]="formatLabel"
+                name="numInputs"
+                (input)="numInputsChange($event)"
+                [vertical]="false"
+                value="program.numInputs()"
+              >
+              </mat-slider
+              >{{ program.numInputs() }}
+            </div>
+            <div class="a-slider data-bottom-control">
+              <h5 class="slider-header">
+                How many outputs?
+              </h5>
+              <mat-slider
+                class="input-count"
+                [max]="5"
+                [min]="1"
+                [step]="1"
+                [tickInterval]="1"
+                [displayWith]="formatLabel"
+                name="numOutputs"
+                (input)="numOutputsChange($event)"
+                [vertical]="false"
+                value="program.numOutputs()"
+              >
+              </mat-slider
+              >{{ program.numOutputs() }}
+            </div>
+          </div>
+        </div>
+
+        <div class="serialize-col">
+          <div class="top-bar serialization-bar">
+            Serialization
+          </div>
+
+          <div class="serialize-container">
+            <h5 class="serialize-box-header">
+              Before each input
+            </h5>
+            <ul class="serialize-list">
+              <li
+                *ngFor="
+                  let marker of program.conversionSpec['inputMarkers'];
+                  let idx = index;
+                  trackBy: trackByFn
+                "
+              >
+                <textarea
+                  class="pair-input"
+                  matInput
+                  autocomplete="off"
+                  name="{{ 'markerI' + idx }}"
+                  placeholder="write me..."
+                  [(ngModel)]="program.conversionSpec['inputMarkers'][idx]"
+                  (input)="refreshText($event)"
+                ></textarea>
+              </li>
+            </ul>
+            <h5 class="serialize-box-header">
+              Between inputs and outputs
+            </h5>
+            <textarea
+              class="pair-input"
+              matInput
+              autocomplete="off"
+              name="splitmarker"
+              placeholder="write me..."
+              [(ngModel)]="program.conversionSpec['splitMarker']"
+              (input)="refreshText($event)"
+            ></textarea>
+
+            <h5 class="serialize-box-header">
+              Before each output
+            </h5>
+            <ul class="serialize-list">
+              <li
+                *ngFor="
+                  let marker of program.conversionSpec['outputMarkers'];
+                  let idx = index;
+                  trackBy: trackByFn
+                "
+              >
+                <textarea
+                  class="pair-input"
+                  matInput
+                  autocomplete="off"
+                  name="{{ 'markerO' + idx }}"
+                  placeholder="write me..."
+                  [(ngModel)]="program.conversionSpec['outputMarkers'][idx]"
+                  (input)="refreshText($event)"
+                ></textarea>
+              </li>
+            </ul>
+
+            <h5 class="serialize-box-header">
+              At the end
+            </h5>
+            <textarea
+              class="pair-input"
+              matInput
+              autocomplete="off"
+              name="endMarker"
+              placeholder="write me..."
+              [(ngModel)]="program.conversionSpec['endMarker']"
+              (input)="refreshText($event)"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="prompt-col">
+          <div class="top-bar prompt-bar">
+            Prompt
+          </div>
+          <written-page #editor channel="{{ editorChannel }}"></written-page>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab *ngIf="includeQuickTest">
+      <ng-template mat-tab-label>
+        <mat-icon class="tab-icon">bug_report</mat-icon>
+        Test
+      </ng-template>
+
+      <div class="main-test-container">
+        <div class="test-input-col">
+          <div class="top-bar test-input-bar">
+            Test Inputs
+          </div>
+          <ul class="output-list">
+            <li *ngFor="let input of testInputs; let jdx = index; trackBy: trackByFn">
+              <textarea
+                class="pair-input"
+                matInput
+                autocomplete="off"
+                name="{{ 'einput' + idx + '-' + jdx }}"
+                placeholder="Write me..."
+                [(ngModel)]="testInputs[jdx]"
+              ></textarea>
+            </li>
+          </ul>
+          <button
+            [disabled]="isGeneratingTest"
+            mat-raised-button
+            class="butt"
+            (click)="refreshTest()"
+          >
+            <mat-icon>play_circle_outline</mat-icon>
+            Run Model
+          </button>
+          <mat-checkbox (change)="toggleGreedy($event.checked)">Greedy</mat-checkbox>
+        </div>
+
+        <div class="test-result-col">
+          <div class="top-bar test-result-bar">
+            Test Outputs
+          </div>
+          <ul class="output-list">
+            <li class="output-group" *ngFor="let outputs of testOutputs; let idx = index">
+              <div class="button-holder">
+                <button class="add-button" mat-mini-fab (click)="addTestToData(idx)">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+              <ul class="inner-output-list">
+                <li class="output-list-item" *ngFor="let output of outputs">
+                  <div>{{ output }}</div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</form>

@@ -1,0 +1,38 @@
+@import 'experimental/centaur/models/main_theme.scss';
+
+:host {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+.neon-divider {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+  box-shadow: 0 0 30px 10px #fff, /* inner white */ 0 0 70px 20px #f0f,
+    /* middle magenta */ 0 0 100px 30px #0ff; /* outer cyan */
+}
+
+a {
+  color: Aliceblue;
+  font-size: 17px;
+  margin-left: 30px;
+  padding-bottom: 17px;
+}
+
+.the-page {
+  max-height: 42vh;
+  overflow-y: auto;
+}
+
+.titles {
+  margin-left: 17px;
+}

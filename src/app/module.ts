@@ -18,15 +18,16 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule, Routes} from '@angular/router';
 
-import {MainApp} from './app';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MenuPage} from '../pages/menu/component';
 import {MenuPageModule} from '../pages/menu/module';
 
+import {MainApp} from './app';
+
 const routes: Routes = [
-  {path: '', pathMatch: 'full', component: MenuPage},
+  {path: 'menu', component: MenuPage},
 ];
 
 @NgModule({
@@ -34,10 +35,7 @@ const routes: Routes = [
     MainApp,
   ],
   imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    RouterModule.forRoot(routes),
+    BrowserModule, CommonModule, FormsModule, RouterModule.forRoot(routes),
     MenuPageModule
   ],
   exports: [],

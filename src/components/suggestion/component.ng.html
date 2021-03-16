@@ -1,0 +1,12 @@
+<div
+  class="suggestions-wrapper"
+  [hidden]="isComponentHidden "
+>
+  <div class="loader-container" [hidden]="!isGenerating">
+    <div class="loader"></div>
+  </div>
+  <div class="suggestions" [hidden]="suggestions.length === 0">
+    <suggestion class="suggestion" *ngFor="let suggestion of suggestions" [text]="suggestion" (click)="clickedSuggestion(suggestion)">
+    </suggestion>
+  </div>
+</div>

@@ -1,0 +1,311 @@
+.mat-table {
+}
+
+.main-test-container {
+  overflow-y: auto;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.butt {
+  margin: 10px;
+}
+
+.rightbutt {
+  float: right;
+  min-width: 140px;
+}
+
+.mini-butt {
+  margin: 10px;
+  margin-left: 5px;
+  margin-right: 16px;
+}
+
+.input-list {
+  list-style: none;
+  padding-inline-start: 0px;
+  width: 95%;
+  margin-top: 0px;
+}
+
+.output-list {
+  list-style: none;
+  padding-inline-start: 0px;
+  width: 100%;
+  margin-top: 0px;
+}
+
+.serialize-list {
+  list-style: none;
+  padding-inline-start: 0px;
+  width: 100%;
+  margin-top: 0px;
+}
+
+.pair-input {
+  padding: 5px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  min-height: 72px;
+  resize: none;
+  background-color: #eee;
+  width: 100%;
+}
+
+::host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.main-tabs {
+  width: 100%;
+  height: 100%;
+}
+
+.container-form {
+  width: 100%;
+  height: 100%;
+}
+
+.mat-column-buttons {
+  flex: 0 0 60px !important;
+  width: auto;
+}
+
+.input-count {
+}
+
+.main-tabs {
+  height: 100%;
+}
+
+::ng-deep .main-tabs .mat-tab-body-content {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .mat-tab-body-wrapper {
+  height: 100%;
+}
+
+hr {
+  border: 1px dashed #000;
+  width: 100%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.number-sliders {
+  margin-left: 17px;
+}
+
+.a-slider {
+  flex-grow: 5;
+}
+
+.slider-header {
+  margin-left: 17px;
+  margin-bottom: 0px;
+  margin-top: 7px;
+}
+
+.serialize-box-header {
+  margin-left: 5px;
+  margin-bottom: 0px;
+  margin-top: 13px;
+  color: var(--accent);
+}
+
+.marker-editor {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.serialize-col {
+  height: 100%;
+  max-width: 240px;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+.data-container {
+  width: 100%;
+  flex-grow: 5;
+  display: flex;
+  flex-direction: column;
+}
+
+// slider-row / data-row / button-row are vertflex in data-container
+
+.slider-row {
+  max-height: 100px;
+  min-height: 100px;
+  display: flex;
+}
+
+.io-pairs {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.io-pairs-container {
+  flex-grow: 5;
+  display: flex;
+  flex-direction: row;
+}
+
+.io-pairs-header {
+  min-height: 27px;
+  max-height: 27px;
+  color: gray;
+  font-size: 13px;
+  display: flex;
+  flex-direction: row;
+}
+
+.io-pairs-list-container {
+  flex-grow: 2;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.io-pairs-list {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.io-pair {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1em;
+}
+
+.io-pair-inputs {
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+}
+
+.io-pair-outputs {
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+}
+
+.io-pair-actions {
+  min-width: 47px;
+  max-width: 47px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.io-pair-color0 {
+}
+
+.io-pair-color1 {
+  background-color: lightgray;
+}
+
+.header-marg {
+  padding-left: 5px;
+}
+
+.button-row {
+  max-height: 100px;
+  min-height: 100px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  overflow-y: hidden;
+}
+
+.prompt-col {
+  max-width: 500px;
+  min-width: 500px;
+}
+
+.output-group {
+  margin-top: 17px;
+  display: flex;
+  flex-direction: row;
+}
+
+.data-bottom-control {
+  flex: 1 1 0px;
+}
+
+.serialize-container {
+  margin-left: 17px;
+  overflow-y: auto;
+}
+
+.top-bar {
+  color: white;
+  text-align: center;
+}
+
+.data-bar {
+  background: Slateblue;
+}
+
+.serialization-bar {
+  background: RebeccaPurple;
+}
+
+.prompt-bar {
+  background: Purple;
+}
+
+.test-input-col {
+  width: 280px;
+}
+
+.test-result-col {
+  flex-grow: 5;
+}
+
+.test-input-bar {
+  background: DodgerBlue;
+}
+
+.test-result-bar {
+  background: MidnightBlue;
+}
+
+.output-list-item {
+  font-size: 20px;
+}
+
+.inner-output-list {
+  padding-inline-start: 66px;
+}
+
+.button-holder {
+  position: relative;
+  margin-left: 9px;
+  height: auto;
+}
+
+.add-button {
+  background-color: CornflowerBlue;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}

@@ -1,0 +1,10 @@
+<div class="popup-contents">
+  <h2>Instructions</h2>
+
+  <p *ngFor="let paragraph of paragraphs">
+  {{paragraph}}
+  </p>
+</div>
+<div class="controls">
+  <button class="button" (click)="hideMe()">Close</button>
+</div>

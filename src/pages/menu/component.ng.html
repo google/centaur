@@ -1,1 +1,52 @@
-Test
+<div class="titles">
+<h1><s>000</s> Story Centaur <s>000</s></h1>
+<h4> A set of tools for AI assisted creative writing. </h4>
+<br/>
+<h5> Here's the ingredients that all the tools are (mostly) made of - links at the bottom.</h5>
+</div>
+
+<div>
+  <written-page class="the-page" [channel]="'main'"></written-page>
+</div>
+
+<div class="suggestion-div">
+  <suggestion-panel #panel [clearOnChoice]="false" (suggestionChosen)="handleSuggestion($event)"></suggestion-panel>
+</div>
+
+<div>
+<centaur-button
+      #butt
+      [icon]="'SPEECH_BUBS'"
+      [title]="'Generate'"
+      [waitOnClick]="true"
+      [toolTip]="'Buttons like this trigger the Language Model'"
+      (clicked)="generate()"
+    ></centaur-button>
+<br/>
+<centaur-button
+      [icon]="'HELP'"
+      [title]="'Help'"
+      [toolTip]="'Buttons like this show some instructions.'"
+      (clicked)="showHelp()"
+    ></centaur-button>
+</div>
+
+<hr class="neon-divider">
+<div>
+</div>
+
+<instructions-dialog
+  #help
+  [paragraphs]="[
+    'Help text'
+  ]"
+></instructions-dialog>
+
+
+<a href="zero">Magic Word</a>
+<a href="voice">Say It Again</a>
+<a href="spine">Story Spine</a>
+<a href="char">Character Maker</a>
+<a href="improv">Improv Prompts</a>
+
+

@@ -6,19 +6,30 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 
-import {MenuPage} from './component';
+import {CentaurButtonModule} from '../../components/button/module';
+import {FewshotEditorModule} from '../../components/fewshot_editor/module';
+import {InstructionsDialogModule} from '../../components/instructions/module';
+import {WrittenPageModule} from '../../components/page/module';
+import {SuggestionPanelModule} from '../../components/suggestion/module';
+
+import {ModelMenu} from './component';
 
 @NgModule({
-  declarations: [MenuPage],
+  declarations: [ModelMenu],
   imports: [
     CommonModule,
+    SuggestionPanelModule,
+    WrittenPageModule,
+    CentaurButtonModule,
+    InstructionsDialogModule,
+    FewshotEditorModule,
     MatInputModule,
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
     FormsModule,
   ],
-  exports: [MenuPage],
+  exports: [ModelMenu],
 })
-export class MenuPageModule {
+export class ModelMenuModule {
 }
