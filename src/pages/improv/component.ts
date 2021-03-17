@@ -1,15 +1,31 @@
+/**
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSelectChange} from '@angular/material/select';
-import {Formula, Passage} from '../../common/interfaces';  // from ../../common:interfaces
-import {SEMIRARE} from '../../common/wordlists';  // from ../../common:wordlists
-import {CentaurButton} from '../../components/button/component';  // from ../../components/button:button
-import {InstructionsDialog} from '../../components/instructions/component';  // from ../../components/instructions:instructions
-import {WrittenPage} from '../../components/page/component';  // from ../../components/suggestion:suggestion
-import {SuggestionPanel} from '../../components/suggestion/component';  // from ../../components/suggestion:suggestion
-import {TextGenerationResult, TextGenerationService} from '../../services/interfaces';  // from ../../services:services
-import {PassageService} from '../../services/passage_service';  // from ../../services:services
-import {ThemeService} from '../../services/theme_service';  // from ../../services:services
+import {Formula, Passage} from '../../common/interfaces';
+import {SEMIRARE} from '../../common/wordlists';
+import {CentaurButton} from '../../components/button/component';
+import {InstructionsDialog} from '../../components/instructions/component';
+import {WrittenPage} from '../../components/page/component';
+import {SuggestionPanel} from '../../components/suggestion/component';
+import {TextGenerationResult, TextGenerationService} from '../../services/interfaces';
+import {PassageService} from '../../services/passage_service';
+import {ThemeService} from '../../services/theme_service';
 
 // tslint:disable:no-any this is my reasoning
 

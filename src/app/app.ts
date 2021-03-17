@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,15 @@ import {Component} from '@angular/core';
  * Root component for the entire app.
  */
 @Component({
-  selector: 'main-app',
-  template: '<router-outlet></router-outlet>',
-  viewProviders: [],
+    selector: 'main-app',
+    template: '<router-outlet></router-outlet>',
+    viewProviders: [],
 })
 export class MainApp {
 }
 
 window.oncontextmenu = (event: Event) => {
-  event.preventDefault();
-  event.stopPropagation();
-  return false;
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
 };
