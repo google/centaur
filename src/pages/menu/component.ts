@@ -1,14 +1,13 @@
 import {AfterViewInit, Component, Inject, NgZone, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
-import {FewshotContextIO} from '../../common/interfaces';  // from ../../common/interfaces
-import {Passage} from '../../common/interfaces';  // from ../../common:interfaces
+import {Formula, FormulaData, Passage} from '../../common/interfaces';  // from ../../common/interfaces
+import {TextGenerationService} from '../../services/interfaces';
 import {SEMIRARE} from '../../common/wordlists';  // from ../../common:wordlists
 import {CentaurButton} from '../../components/button/component';  // from ../../components/button:button
 import {InstructionsDialog} from '../../components/instructions/component';  // from ../../components/instructions:instructions
 import {WrittenPage} from '../../components/page/component';  // from ../../components/suggestion:suggestion
 import {SuggestionPanel} from '../../components/suggestion/component';  // from ../../components/suggestion:suggestion
-import {CentralGenerationService} from '../../services/central_generation_service';  // from ../../services:central_generation_service
 import {TextGenerationResult} from '../../services/interfaces';  // from ../../services:services
 import {PassageService} from '../../services/passage_service';  // from ../../services:services
 import {ThemeService} from '../../services/theme_service';  // from ../../services:services
@@ -20,7 +19,7 @@ import {ThemeService} from '../../services/theme_service';  // from ../../servic
   templateUrl: './component.ng.html',
   styleUrls: ['./component.scss'],
 })
-export class ModelMenu implements AfterViewInit {
+export class MenuPage implements AfterViewInit {
   @ViewChild('panel') panel!: SuggestionPanel;
   @ViewChild('help') help!: InstructionsDialog;
   @ViewChild('page') page!: WrittenPage;
@@ -29,7 +28,7 @@ export class ModelMenu implements AfterViewInit {
   constructor(
       private readonly passageService: PassageService,
       readonly themeService: ThemeService,
-      private readonly generationService: CentralGenerationService,
+      private readonly generationService: TextGenerationService,
       private readonly snackBar: MatSnackBar,
       private zone: NgZone,
 
@@ -56,7 +55,7 @@ export class ModelMenu implements AfterViewInit {
 
   generate() {
     const t = this.passageService.getOrEmpty('main')['text'];
-    this.generationService.generateText(t).then(
+      this.generationService.generateText(t, -1).then(
         (result: TextGenerationResult) => {
           if (!result['error']) {
             this.passageService.appendToPassage(result['text'][0], 'main');

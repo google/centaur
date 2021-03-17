@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {HttpClientModule} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -24,10 +25,15 @@ import {RouterModule, Routes} from '@angular/router';
 import {MenuPage} from '../pages/menu/component';
 import {MenuPageModule} from '../pages/menu/module';
 
+import {TextGenerationService} from '../services/interfaces';
+import {ParrotGenerationService} from '../services/parrot_generation_service';
+
 import {MainApp} from './app';
 
-const routes: Routes = [
-  {path: 'menu', component: MenuPage},
+const routes:
+
+Routes = [
+  {path: '', component: MenuPage},
 ];
 
 @NgModule({
@@ -36,9 +42,15 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule, CommonModule, FormsModule, RouterModule.forRoot(routes),
-    MenuPageModule
+      MenuPageModule,
+      // Import HttpClient Module after Browser Module
+    HttpClientModule,
+    MatSnackBarModule,
   ],
-  exports: [],
+    exports: [],
+    providers: [
+        {provide: TextGenerationService, useClass: ParrotGenerationService},
+    ],
   bootstrap: [MainApp],
 })
 export class AppModule {

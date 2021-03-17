@@ -26,7 +26,7 @@
             <div class="io-pairs-list-container">
               <div class="io-pairs-list">
                 <div
-                  *ngFor="let pair of program.pairs; let idx = index; trackBy: trackByFn"
+                  *ngFor="let pair of program.data; let idx = index; trackBy: trackByFn"
                   [class]="'io-pair io-pair-color'+(idx % 2)"
                 >
                   <div class="io-pair-inputs">
@@ -145,7 +145,7 @@
             <ul class="serialize-list">
               <li
                 *ngFor="
-                  let marker of program.conversionSpec['inputMarkers'];
+                  let marker of program.serialization['inputMarkers'];
                   let idx = index;
                   trackBy: trackByFn
                 "
@@ -156,7 +156,7 @@
                   autocomplete="off"
                   name="{{ 'markerI' + idx }}"
                   placeholder="write me..."
-                  [(ngModel)]="program.conversionSpec['inputMarkers'][idx]"
+                  [(ngModel)]="program.serialization['inputMarkers'][idx]"
                   (input)="refreshText($event)"
                 ></textarea>
               </li>
@@ -170,7 +170,7 @@
               autocomplete="off"
               name="splitmarker"
               placeholder="write me..."
-              [(ngModel)]="program.conversionSpec['splitMarker']"
+              [(ngModel)]="program.serialization['splitMarker']"
               (input)="refreshText($event)"
             ></textarea>
 
@@ -180,7 +180,7 @@
             <ul class="serialize-list">
               <li
                 *ngFor="
-                  let marker of program.conversionSpec['outputMarkers'];
+                  let marker of program.serialization['outputMarkers'];
                   let idx = index;
                   trackBy: trackByFn
                 "
@@ -191,7 +191,7 @@
                   autocomplete="off"
                   name="{{ 'markerO' + idx }}"
                   placeholder="write me..."
-                  [(ngModel)]="program.conversionSpec['outputMarkers'][idx]"
+                  [(ngModel)]="program.serialization['outputMarkers'][idx]"
                   (input)="refreshText($event)"
                 ></textarea>
               </li>
@@ -206,7 +206,7 @@
               autocomplete="off"
               name="endMarker"
               placeholder="write me..."
-              [(ngModel)]="program.conversionSpec['endMarker']"
+              [(ngModel)]="program.serialization['endMarker']"
               (input)="refreshText($event)"
             ></textarea>
           </div>
@@ -238,7 +238,7 @@
                 class="pair-input"
                 matInput
                 autocomplete="off"
-                name="{{ 'einput' + idx + '-' + jdx }}"
+                name="{{ 'einput' + jdx }}"
                 placeholder="Write me..."
                 [(ngModel)]="testInputs[jdx]"
               ></textarea>

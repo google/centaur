@@ -12,10 +12,10 @@ import {InstructionsDialogModule} from '../../components/instructions/module';
 import {WrittenPageModule} from '../../components/page/module';
 import {SuggestionPanelModule} from '../../components/suggestion/module';
 
-import {ModelMenu} from './component';
+import {MenuPage} from './component';
 
 @NgModule({
-  declarations: [ModelMenu],
+  declarations: [MenuPage],
   imports: [
     CommonModule,
     SuggestionPanelModule,
@@ -29,7 +29,7 @@ import {ModelMenu} from './component';
     MatIconModule,
     FormsModule,
   ],
-  exports: [ModelMenu],
+  exports: [MenuPage],
 })
-export class ModelMenuModule {
+export class MenuPageModule {
 }

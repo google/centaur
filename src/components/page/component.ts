@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
-import {Passage} from 'google3/experimental/centaur/common/interfaces';  // from google3/experimental/centaur/common:interfaces
-import {PassageService} from 'google3/experimental/centaur/services/passage_service';  // from google3/experimental/centaur/services:services
+import {Passage} from '../../common/interfaces';  // from google3/experimental/centaur/common:interfaces
+import {PassageService} from '../../services/passage_service';  // from google3/experimental/centaur/services:services
 
 /**
  * Repesents a written passage

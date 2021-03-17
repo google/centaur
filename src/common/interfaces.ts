@@ -122,7 +122,7 @@ export class Formula extends Passage {
     return null;
   }
 
-  extract(text: string, markers: string[], endMarker: string): ExtractionResult
+  extract(text: string, markers: string[], endMarker: string): FormulaExtractionResult
       |null {
     const results: string[] = [];
     const numResults = markers.length;

@@ -1,3 +1,4 @@
+import {Injectable} from '@angular/core';
 import {TextGenerationResult, TextGenerationService} from './interfaces';
 
 
@@ -10,6 +11,6 @@ export class ParrotGenerationService implements TextGenerationService {
       Promise<TextGenerationResult> {
     console.log('Generating - ', {context});
     console.log('Generated - ', {context});
-    return context;
+      return {'text': [context]};
   }
 }

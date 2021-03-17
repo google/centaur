@@ -2,10 +2,9 @@ import {AfterViewInit, Component, EventEmitter, Inject, Input, NgZone, Output, V
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSliderChange} from '@angular/material/slider';
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
-import {FewshotContextIO} from 'google3/experimental/centaur/common/interfaces';  // from google3/experimental/centaur/common/interfaces
-import {Passage} from 'google3/experimental/centaur/common/interfaces';  // from google3/experimental/centaur/common:interfaces
-import {CentralGenerationService} from 'google3/experimental/centaur/services/central_generation_service';  // from google3/experimental/centaur/services:central_generation_service
-import {PassageService} from 'google3/experimental/centaur/services/passage_service';  // from google3/experimental/centaur/services:services
+import {Formula, FormulaData, Passage} from '../../common/interfaces';  // from ../../common:interfaces
+import {TextGenerationService} from '../../services/interfaces';
+import {PassageService} from '../../services/passage_service';  // from ../../services:services
 
 @Component({
   selector: 'fewshot',
@@ -15,13 +14,13 @@ import {PassageService} from 'google3/experimental/centaur/services/passage_serv
 export class FewshotEditor implements AfterViewInit {
   constructor(
       private readonly passageService: PassageService,
-      private readonly generationService: CentralGenerationService,
+      private readonly generationService: TextGenerationService,
       private readonly snackBar: MatSnackBar,
       private zone: NgZone,
   ) {
-    this.parent = this.passageService.getOrEmpty(this.parentChannel!);
+    this.parent = this.passageService.getOrEmpty(this.parentChannel!) as Formula;
     this.passageService.setPassage(this.parent);
-    this.program = this.passageService.getOrEmpty(this.editorChannel!);
+    this.program = this.passageService.getOrEmpty(this.editorChannel!) as Formula;
     this.refreshFromParent();
   }
 
@@ -34,7 +33,7 @@ export class FewshotEditor implements AfterViewInit {
 
   refreshFromParent() {
     console.log('STARTING WITH PARENT', this.parentChannel);
-    this.parent = this.passageService.getOrEmpty(this.parentChannel!);
+    this.parent = this.passageService.getOrEmpty(this.parentChannel!) as Formula;
     this.program = this.parent.clone(this.editorChannel!);
     this.passageService.setPassage(this.program);
     this.testInputs = [];
@@ -50,8 +49,8 @@ export class FewshotEditor implements AfterViewInit {
   @Input() allowSerializationEdit = true;
   @Input() includeQuickTest = false;
 
-  parent: Passage;
-  program: Passage;
+  parent: Formula;
+  program: Formula;
 
   testInputs: string[] = [];
   testOutputs: string[][] = [];
@@ -75,26 +74,25 @@ export class FewshotEditor implements AfterViewInit {
     for (let i = 0; i < this.program.numOutputs(); ++i) {
       outputs.push('');
     }
-    this.program.pairs.push({inputs, outputs});
-    this.program.pairs = [...this.program.pairs];
+    this.program.data.push({inputs, outputs});
+    this.program.data = [...this.program.data];
     this.passageService.setPassage(this.program);
   }
 
   deleteIO(i: number) {
-    this.program.pairs.splice(i, 1);
-    this.program.pairs = [...this.program.pairs];
+    this.program.data.splice(i, 1);
+    this.program.data = [...this.program.data];
     this.passageService.setPassage(this.program);
     this.refreshText(null);
   }
 
   importFromIOPairs() {
-    console.log('IMPORT FROM IO');
-    this.program.convertFromIO();
+    this.program.updatePreamble();
     this.passageService.setPassage(this.program);
   }
 
   async generateNewPair() {
-    if (this.program.pairs.length < 2) {
+    if (this.program.data.length < 2) {
       this.zone.run(() => {
         const config = new MatSnackBarConfig();
         config.duration = 3000;
@@ -105,15 +103,15 @@ export class FewshotEditor implements AfterViewInit {
       return;
     }
     this.isGenerating = true;
-    const context = this.program.getTemplateFromIOPairs(this.program.pairs);
-    const result = await this.generationService.generateText(context);
+    const context = this.program.getPreambleUsingData(this.program.data);
+      const result = await this.generationService.generateText(context, -1);
     if (!result['error']) {
       let gotOne = false;
       for (const t of result['text']) {
         const newExample = this.program.extractExample(t);
         if (newExample) {
           gotOne = true;
-          this.program.pairs.push(newExample);
+          this.program.data.push(newExample);
         }
       }
       if (!gotOne) {
@@ -128,7 +126,7 @@ export class FewshotEditor implements AfterViewInit {
               });
         });
       }
-      this.program.pairs = [...this.program.pairs];
+      this.program.data = [...this.program.data];
       this.passageService.setPassage(this.program);
       this.commitMarkerChanges();
     }
@@ -142,9 +140,9 @@ export class FewshotEditor implements AfterViewInit {
   refreshMarkerDemo(event: any) {
     console.log('CALLING!', this.program);
     const numDemos = 2;
-    const demoData: FewshotContextIO[] = [];
+    const demoData: FormulaData[] = [];
     for (let i = 0; i < numDemos; ++i) {
-      const pair: FewshotContextIO = {'inputs': [], 'outputs': []};
+      const pair: FormulaData = {'inputs': [], 'outputs': []};
       for (let j = 0; j < this.program!.numInputs(); ++j) {
         pair['inputs'].push(
             '[Example ' + (i + 1) + ' - Input ' + (j + 1) + ']');
@@ -156,7 +154,7 @@ export class FewshotEditor implements AfterViewInit {
       demoData.push(pair);
     }
     console.log(demoData);
-    const preamble = this.program.getTemplateFromIOPairs(demoData);
+    const preamble = this.program.getPreambleUsingData(demoData);
     console.log(preamble);
     const markerdemo =
         this.passageService.getOrEmpty(this.editorChannel + '-markerdemo');
@@ -171,7 +169,7 @@ export class FewshotEditor implements AfterViewInit {
   numInputsChange(event: MatSliderChange) {
     const newNumInputs = event.value!;
     console.log('NEW #INPUTS - ', newNumInputs);
-    let markers = this.program.conversionSpec['inputMarkers'];
+    let markers = this.program.serialization['inputMarkers'];
     const curNumInputs = markers.length;
     if (curNumInputs > newNumInputs) {
       markers = markers.slice(0, newNumInputs);
@@ -181,7 +179,7 @@ export class FewshotEditor implements AfterViewInit {
       }
     }
     console.log('NEW MARKERS = ', markers);
-    this.program.conversionSpec['inputMarkers'] = markers;
+    this.program.serialization['inputMarkers'] = markers;
     this.refreshMarkerDemo(undefined);
     this.commitMarkerChanges();
   }
@@ -189,7 +187,7 @@ export class FewshotEditor implements AfterViewInit {
   numOutputsChange(event: MatSliderChange) {
     const newNumOutputs = event.value!;
     console.log('NEW #Outputs - ', newNumOutputs);
-    let markers = this.program.conversionSpec['outputMarkers'];
+    let markers = this.program.serialization['outputMarkers'];
     const curNumOutputs = markers.length;
     if (curNumOutputs > newNumOutputs) {
       markers = markers.slice(0, newNumOutputs);
@@ -198,7 +196,7 @@ export class FewshotEditor implements AfterViewInit {
         markers.push('');
       }
     }
-    this.program.conversionSpec!['outputMarkers'] = markers;
+    this.program.serialization!['outputMarkers'] = markers;
     this.refreshMarkerDemo(undefined);
     this.commitMarkerChanges();
   }
@@ -207,8 +205,8 @@ export class FewshotEditor implements AfterViewInit {
     const newNumInputs = this.program.numInputs();
     const newNumOutputs = this.program.numOutputs();
     console.log('CHANGING INPUT!', {newNumInputs, newNumOutputs});
-    const prev = this.program.pairs;
-    this.program.pairs = [];
+    const prev = this.program.data;
+    this.program.data = [];
     for (const p of prev) {
       const curNumInputs = p['inputs'].length;
       if (curNumInputs > newNumInputs) {
@@ -228,9 +226,9 @@ export class FewshotEditor implements AfterViewInit {
           p['outputs'].push('');
         }
       }
-      this.program.pairs.push(p);
+      this.program.data.push(p);
     }
-    console.log('RESULT OF CHANGE', {result: this.program.pairs});
+    console.log('RESULT OF CHANGE', {result: this.program.data});
     this.passageService.setPassage(this.program);
     this.testInputs = [];
     for (let i = 0; i < this.program.numInputs(); ++i) {
@@ -278,8 +276,8 @@ export class FewshotEditor implements AfterViewInit {
   addTestToData(index: number) {
     const inputs = this.testInputs;
     const outputs = this.testOutputs[index];
-    this.program.pairs.push({inputs, outputs});
-    this.program.pairs = [...this.program.pairs];
+    this.program.data.push({inputs, outputs});
+    this.program.data = [...this.program.data];
     this.passageService.setPassage(this.program);
   }
 
