@@ -1,0 +1,67 @@
+<div class="outer-div">
+  <div class="style-datum-container">
+    <div class="style-datum" *ngFor="let d of testData; let jdx = index; trackBy: trackByFn">
+      <div class="ibar">
+        <written-page #page [channel]="'input' + jdx"></written-page>
+      </div>
+      <div class="obar">
+        <div class="obar-part">
+          {{ d["output"] }}
+        </div>
+        <div class="obar-part obar-button">
+          <centaur-button
+            #linebutt
+            [icon]="'SPEECH_BUBS'"
+            [title]="''"
+            [toolTip]="'Regenerate this one'"
+            [waitOnClick]="true"
+            [hidden]="d['output'].length === 0"
+            (clicked)="generateOne(jdx, 0, false)"
+          ></centaur-button>
+        </div>
+      </div>
+      <br />
+    </div>
+  </div>
+
+  <div class="button-panel">
+    <div class="voice-selector">
+      <mat-form-field>
+        <mat-label>Style</mat-label>
+        <mat-select
+          class="context-select"
+          (selectionChange)="changeVoice($event)"
+          [value]="currentVoice['name']"
+        >
+          <mat-option *ngFor="let voice of voiceList" [value]="voice.name">
+            {{ voice.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="currentVoice['name'] == 'CUSTOM'">
+        <input matInput name="voice" class="voice-input" [(ngModel)]="customVoice" />
+      </mat-form-field>
+    </div>
+    <centaur-button
+      #butt
+      [icon]="'SPEECH_BUBS'"
+      [title]="'Generate'"
+      [toolTip]="'Say it again'"
+      [waitOnClick]="true"
+      (clicked)="generate()"
+    ></centaur-button>
+    <br />
+    <centaur-button
+      [icon]="'HELP'"
+      [title]="'Help'"
+      [toolTip]="'Would you like some help?'"
+      (clicked)="showHelp()"
+    ></centaur-button>
+    <br />
+  </div>
+</div>
+
+<instructions-dialog
+  #help
+  [paragraphs]="helpText"
+></instructions-dialog>

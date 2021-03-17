@@ -1,0 +1,21 @@
+<div class="main-container">
+  <div class="traits-container">
+    <div class="trait" *ngFor="let trait of traits; let idx = index">
+      <div class="trait-name">
+        <div class="trait-name-text vertical-center">
+          {{trait}}
+        </div>
+        <button mat-mini-fab [disabled]="generating" class="generate-button vertical-center" *ngIf="cleared[idx]" (click)="generate(idx)">
+          <mat-icon>psychology</mat-icon>
+        </button>
+        <button mat-mini-fab [disabled]="generating" class="delete-button vertical-center" *ngIf="!cleared[idx]" (click)="deleteTrait(idx)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </div>
+      <div class="trait-value">
+        <written-page style="padding:0px;" #page [channel]="'trait-value-' + idx" (keyup)="checkClear(idx)"></written-page>
+      </div>
+    </div>
+  </div>
+  <div class="suggestions-container"></div>
+</div>

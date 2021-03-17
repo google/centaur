@@ -1,0 +1,36 @@
+:host {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.5;
+}
+
+.main-container {
+  margin-left: 17px;
+  margin-top: 17px;
+}
+
+.buttons {
+  margin-bottom: 17px;
+}
+
+.boring-dialog {
+  margin-top: 17px;
+  width: 500px;
+}
+
+.boring-line {
+  width: 100%;
+}
+
+.boring-left {
+  text-align: left;
+}
+
+.boring-right {
+  text-align: right;
+}

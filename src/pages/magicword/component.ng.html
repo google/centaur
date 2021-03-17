@@ -1,0 +1,51 @@
+<div class="outer-div">
+  <h1>Choose your own <s>adventure</s> story</h1>
+  <div class="magicword-container">
+    <span
+      >The magic word is
+      <mat-form-field
+        ><input matInput name="magicword-input" class="magicword-input" [(ngModel)]="magicword"/>
+      </mat-form-field>
+      </span>
+  </div>
+  <div class="button-panel">
+    <centaur-button
+      #butt
+      [icon]="'SPEECH_BUBS'"
+      [title]="'Generate'"
+      [toolTip]="'What comes next, using the magic word?'"
+      [waitOnClick]="true"
+      (clicked)="generate()"
+    ></centaur-button>
+    <br />
+    <centaur-button
+      [icon]="'HELP'"
+      [title]="'Help'"
+      [toolTip]="'Would you like some help?'"
+      (clicked)="showHelp()"
+    ></centaur-button>
+    <br />
+    <centaur-button
+      [icon]="'PALLETE'"
+      [title]="'bobross'"
+      [toolTip]="'RIP Bob Ross'"
+      (clicked)="themeService.cycleTheme()"
+    ></centaur-button>
+    <br />
+  </div>
+  <div style="width: 97vh; height: 60vh;">
+    <written-page #page [channel]="pageChannel"></written-page>
+  </div>
+</div>
+
+<div class="suggestion-div">
+  <suggestion-panel #panel (suggestionChosen)="handleSuggestion($event)" (generationFailed)="reenableGen()" (generationDone)="reenableGen()"></suggestion-panel>
+</div>
+
+<instructions-dialog
+  #help
+  [paragraphs]="[
+    'This experiment continues text while using a target word.',
+    'You can type whatever you want for the word, and you can edit the main text, too!'
+  ]"
+></instructions-dialog>

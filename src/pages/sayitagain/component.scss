@@ -1,0 +1,39 @@
+:host {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.5;
+}
+
+.button-panel {
+  max-width: 300px;
+  min-width: 300px;
+}
+
+.outer-div {
+  padding: 30px;
+  margin-left: 17px;
+  display: flex;
+  flex-direction: row;
+}
+
+.style-datum-container {
+  flex-grow: 5;
+}
+
+.obar {
+  display: flex;
+}
+
+.obar-button {
+  top: -17px;
+  position: relative;
+}
+
+.voice-selector {
+  max-width: 200px;
+}

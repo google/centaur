@@ -1,0 +1,60 @@
+<div class="main-container">
+  <mat-form-field>
+        <mat-label>Game</mat-label>
+        <mat-select
+          class="game-select"
+          (selectionChange)="changeGame($event)"
+          [value]="currentGame['name']"
+        >
+          <mat-option *ngFor="let game of gameList" [value]="game['name']">
+            {{ game.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  <h1>
+    {{currentGame['title']}}
+  </h1>
+  <div class="buttons">
+  <centaur-button
+      #butt
+      [icon]="'SPEECH_BUBS'"
+      [title]="'Generate'"
+      [toolTip]="'Generate a setup'"
+      [waitOnClick]="true"
+      (clicked)="generate()"
+    ></centaur-button>
+  </div>
+
+  <div *ngIf="currentGame['name']=='Interrogation'" class="crime-text-container">
+    <div>
+      You have been accused of...
+    </div>
+    <mat-form-field><input placeholder="write an -ing verb" matInput name="crimeverb" class="crimeverb-input" [(ngModel)]="crimeverb"/>
+    </mat-form-field>
+    <div *ngIf="crime">
+    <div  class="crime-container">
+      {{crime}}
+    </div>
+    <div>
+      Now we need to know...
+    </div>
+    <div class="constraint-container">
+      {{constraint}}
+    </div>
+    </div>
+  </div>
+
+  <div *ngIf="currentGame['name']=='Empty'" class="emptygame-text-container">
+    <div>
+      <div *ngIf="boringContext" class="boring-context">
+          Perform this dialog between two people who {{boringContext}}
+      </div>
+      <div class="boring-dialog">
+        <div *ngFor="let btext of boringText; let idx = index" class="boring-line" [ngClass]="(idx % 2 == 0)?'boring-left':'boring-right'">
+          {{ btext }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

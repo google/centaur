@@ -1,0 +1,42 @@
+<div class="main-container">
+  <div class="spine-col">
+    <div class="real-spine-cols">
+      <div class="bone-row" *ngFor="let segment of spine; let idx = index">
+        <div class="bone-item">
+          <mat-form-field style="width:100%;">
+            <input matInput name="{{ 'spine' + idx }}" class="spine-sentence" [(ngModel)]="spine[idx]['bone']" />
+          </mat-form-field>
+        </div>
+        <div class="spine-button-item">
+          <button mat-mini-fab [disabled]="idx === 0" (click)="cutSpine(idx)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+          <button mat-mini-fab  *ngIf="segment['meat'].length > 0" (click)="addMeat(idx)">
+            <mat-icon>redo</mat-icon>
+          </button>
+          <button mat-mini-fab  [disabled]="!checkMeatAt(idx-1)" style="background: #73c7af;" *ngIf="segment['meat'].length === 0" (click)="addMeat(idx)">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="generating == 'bone'" class="pulser"></div>
+
+      <button mat-raised-button class="add-spine-button" (click)="addSpine()">
+        <mat-icon>add</mat-icon>
+        Add A Segment of Spine to the Story
+      </button>
+    </div>
+
+    <div class="text-col">
+      <span class="spine-item" *ngFor="let segment of spine; let idx = index">
+        {{ segment["meat"] }}
+      </span>
+      <div *ngIf="generating == 'meat'" class="pulser"></div>
+    </div>
+  </div>
+
+  <div class="suggestion-div">
+    <suggestion-panel #suggestions (suggestionChosen)="handleSuggestion($event)"></suggestion-panel>
+  </div>
+</div>

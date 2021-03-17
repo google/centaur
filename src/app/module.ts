@@ -28,6 +28,21 @@ import {MenuPageModule} from '../pages/menu/module';
 import {DevPage} from '../pages/dev/component';
 import {DevPageModule} from '../pages/dev/module';
 
+import {MagicWordPage} from '../pages/magicword/component';
+import {MagicWordPageModule} from '../pages/magicword/module';
+
+import {SayItAgainPage} from '../pages/sayitagain/component';
+import {SayItAgainPageModule} from '../pages/sayitagain/module';
+
+import {StorySpinePage} from '../pages/storyspine/component';
+import {StorySpinePageModule} from '../pages/storyspine/module';
+
+import {CharMakerPage} from '../pages/charmaker/component';
+import {CharMakerPageModule} from '../pages/charmaker/module';
+
+import {ImprovPage} from '../pages/improv/component';
+import {ImprovPageModule} from '../pages/improv/module';
+
 import {TextGenerationService} from '../services/interfaces';
 import {ParrotGenerationService} from '../services/parrot_generation_service';
 
@@ -38,6 +53,11 @@ const routes:
 Routes = [
     {path: '', component: MenuPage},
     {path: 'dev', component: DevPage},
+    {path: 'magicword', component: MagicWordPage},
+    {path: 'sayitagain', component: SayItAgainPage},
+    {path: 'storyspine', component: StorySpinePage},
+    {path: 'charmaker', component: CharMakerPage},
+    {path: 'improv', component: ImprovPage},
 ];
 
 @NgModule({
@@ -52,6 +72,11 @@ Routes = [
     HttpClientModule,
         MatSnackBarModule,
         DevPageModule,
+        MagicWordPageModule,
+        SayItAgainPageModule,
+        StorySpinePageModule,
+        CharMakerPageModule,
+        ImprovPageModule,
   ],
     exports: [],
     providers: [

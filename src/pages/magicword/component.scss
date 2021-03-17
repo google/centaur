@@ -1,0 +1,51 @@
+:host {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.5;
+}
+
+.button-panel {
+  position: absolute;
+  right: 200px;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 1em 0;
+  padding: 16px;
+}
+
+h1 > s {
+  opacity: 0.2;
+  font-weight: 100;
+}
+
+.magicword-container {
+  white-space: pre-wrap;
+}
+
+.outer-div {
+  padding: 30px;
+}
+
+.suggestion-div {
+  box-sizing: border-box;
+  width: 100%;
+  background: transparent;
+  color: var(--foreground);
+  box-shadow: none;
+  padding: 8px;
+  position: absolute;
+  bottom: 0px;
+}
+
+input.magicword-input {
+  font-family: inherit;
+  font-size: inherit;
+  width: 220px;
+}
