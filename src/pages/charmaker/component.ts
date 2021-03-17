@@ -36,7 +36,8 @@ const REFERENCE_CHARS: {[name: string]: string}[] = [
     'Scene Objective': 'to get a good haircut',
     'Internal Obstacles': 'is very picky',
     'External Obstacles': 'the barbershop is closed',
-    'Tactics': 'convincing friends to help',
+
+      'Tactics': 'convincing friends to help',
     'Physical Attributes': 'fit and well-dressed',
     'Backstory': 'comes from a rich family',
   },
