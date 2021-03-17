@@ -1,0 +1,22 @@
+<form id="jankyload-form">
+  <div id="janky-holder">
+      <textarea
+                id="jankyload-input"
+                matInput
+                name="context"
+                placeholder="Paste save data here."
+                [(ngModel)]="loaddata"
+      >
+      </textarea>
+      <button
+        mat-raised-button
+        class="submit-relationship"
+        type="button"
+        color="primary"
+        (click)="onOK()"
+      >
+        <mat-icon>done_outline</mat-icon>
+        Load it!
+      </button>
+  </div>
+</form>

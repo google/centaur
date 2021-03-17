@@ -1,0 +1,21 @@
+<div class="flex-container">
+  <div class="flex-thing">
+    <fewshot #fewshotedtor
+      [includeQuickTest]="true"
+      [allowSerializationEdit]="true"
+      [parentChannel]="'program'"
+      [editorChannel]="'editor'"
+    ></fewshot>
+  </div>
+  <div class="button-panel">
+    <button mat-raised-button class="butt" (click)="save()">
+          <mat-icon>save</mat-icon>
+          Save
+        </button>
+    <button mat-raised-button class="butt" (click)="load()">
+          <mat-icon>read_more</mat-icon>
+          Load
+        </button>
+
+  </div>
+</div>

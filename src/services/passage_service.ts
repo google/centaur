@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 
-import {Passage} from '../common/interfaces';
+import {Formula, Passage} from '../common/interfaces';
 
 /**
  *  Coordinates passages on string indexed channels.
@@ -15,22 +15,29 @@ import {Passage} from '../common/interfaces';
   providedIn: 'root',
 })
 export class PassageService {
-  private readonly passageSource = new Subject<Passage>();
+  private readonly passageSource = new Subject<Formula>();
   passage$ = this.passageSource.asObservable();
 
-  memory = new Map<string, Passage>();
+  memory = new Map<string, Formula>();
 
   getOrEmpty(channel: string) {
     if (this.memory.has(channel)) {
       return this.memory.get(channel)!;
     }
-    return new Passage(channel, '');
+    return new Formula(channel, '');
   }
 
-  setPassage(passage: Passage) {
+  setFormula(passage: Formula) {
     this.memory.set(passage.channel, passage);
-    console.log('Updating Passage', passage);
+    console.log('Updating Formula', passage);
     this.passageSource.next(passage);
+  }
+
+    setPassage(passage: Passage) {
+        const newFormula = new Formula(passage.channel, passage.text);
+    this.memory.set(passage.channel, newFormula);
+    console.log('Updating Passage', passage);
+    this.passageSource.next(newFormula);
   }
 
   setPassageText(s: string, channel: string) {

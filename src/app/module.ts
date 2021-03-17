@@ -25,6 +25,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {MenuPage} from '../pages/menu/component';
 import {MenuPageModule} from '../pages/menu/module';
 
+import {DevPage} from '../pages/dev/component';
+import {DevPageModule} from '../pages/dev/module';
+
 import {TextGenerationService} from '../services/interfaces';
 import {ParrotGenerationService} from '../services/parrot_generation_service';
 
@@ -33,19 +36,22 @@ import {MainApp} from './app';
 const routes:
 
 Routes = [
-  {path: '', component: MenuPage},
+    {path: '', component: MenuPage},
+    {path: 'dev', component: DevPage},
 ];
 
 @NgModule({
   declarations: [
     MainApp,
   ],
-  imports: [
-    BrowserModule, CommonModule, FormsModule, RouterModule.forRoot(routes),
+    imports: [
+        BrowserAnimationsModule,
+        BrowserModule, CommonModule, FormsModule, RouterModule.forRoot(routes),
       MenuPageModule,
       // Import HttpClient Module after Browser Module
     HttpClientModule,
-    MatSnackBarModule,
+        MatSnackBarModule,
+        DevPageModule,
   ],
     exports: [],
     providers: [

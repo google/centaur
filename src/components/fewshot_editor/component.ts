@@ -19,7 +19,7 @@ export class FewshotEditor implements AfterViewInit {
       private zone: NgZone,
   ) {
     this.parent = this.passageService.getOrEmpty(this.parentChannel!) as Formula;
-    this.passageService.setPassage(this.parent);
+    this.passageService.setFormula(this.parent);
     this.program = this.passageService.getOrEmpty(this.editorChannel!) as Formula;
     this.refreshFromParent();
   }
@@ -35,7 +35,7 @@ export class FewshotEditor implements AfterViewInit {
     console.log('STARTING WITH PARENT', this.parentChannel);
     this.parent = this.passageService.getOrEmpty(this.parentChannel!) as Formula;
     this.program = this.parent.clone(this.editorChannel!);
-    this.passageService.setPassage(this.program);
+    this.passageService.setFormula(this.program);
     this.testInputs = [];
     for (let i = 0; i < this.program.numInputs(); ++i) {
       this.testInputs.push('');
@@ -76,19 +76,19 @@ export class FewshotEditor implements AfterViewInit {
     }
     this.program.data.push({inputs, outputs});
     this.program.data = [...this.program.data];
-    this.passageService.setPassage(this.program);
+    this.passageService.setFormula(this.program);
   }
 
   deleteIO(i: number) {
     this.program.data.splice(i, 1);
     this.program.data = [...this.program.data];
-    this.passageService.setPassage(this.program);
+    this.passageService.setFormula(this.program);
     this.refreshText(null);
   }
 
   importFromIOPairs() {
     this.program.updatePreamble();
-    this.passageService.setPassage(this.program);
+    this.passageService.setFormula(this.program);
   }
 
   async generateNewPair() {
@@ -127,7 +127,7 @@ export class FewshotEditor implements AfterViewInit {
         });
       }
       this.program.data = [...this.program.data];
-      this.passageService.setPassage(this.program);
+      this.passageService.setFormula(this.program);
       this.commitMarkerChanges();
     }
     this.isGenerating = false;
@@ -229,7 +229,7 @@ export class FewshotEditor implements AfterViewInit {
       this.program.data.push(p);
     }
     console.log('RESULT OF CHANGE', {result: this.program.data});
-    this.passageService.setPassage(this.program);
+    this.passageService.setFormula(this.program);
     this.testInputs = [];
     for (let i = 0; i < this.program.numInputs(); ++i) {
       this.testInputs.push('');
@@ -278,7 +278,7 @@ export class FewshotEditor implements AfterViewInit {
     const outputs = this.testOutputs[index];
     this.program.data.push({inputs, outputs});
     this.program.data = [...this.program.data];
-    this.passageService.setPassage(this.program);
+    this.passageService.setFormula(this.program);
   }
 
   toggleGreedy(checked: boolean) {
