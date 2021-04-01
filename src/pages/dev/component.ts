@@ -91,11 +91,11 @@ export class DevPage implements AfterViewInit, OnInit {
       console.log('The jankyload dialog was closed', result);
       if (result) {
         const data = JSON.parse(result);
-        const editorPassage = new Passage(EDITOR_PASSAGE_NAME, '') as Formula;
+        const editorPassage = new Formula(EDITOR_PASSAGE_NAME, '');
         editorPassage.data = data['data'];
         editorPassage.serialization = data['serialization'];
         editorPassage.updatePreamble();
-        this.passageService.setPassage(editorPassage);
+        this.passageService.setFormula(editorPassage);
         this.fewshot!.refreshFromParent();
       }
     });

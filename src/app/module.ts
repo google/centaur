@@ -44,7 +44,7 @@ import {ImprovPage} from '../pages/improv/component';
 import {ImprovPageModule} from '../pages/improv/module';
 
 import {TextGenerationService} from '../services/interfaces';
-import {ParrotGenerationService} from '../services/parrot_generation_service';
+import {OpenAIGenerationService} from '../services/openai_generation_service';
 
 import {MainApp} from './app';
 
@@ -80,7 +80,7 @@ Routes = [
     ],
     exports: [],
     providers: [
-        {provide: TextGenerationService, useClass: ParrotGenerationService},
+        {provide: TextGenerationService, useClass: OpenAIGenerationService},
     ],
     bootstrap: [MainApp],
 })
